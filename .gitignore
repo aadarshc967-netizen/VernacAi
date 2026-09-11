@@ -2,3 +2,9 @@
 __pycache__/
 *.pyc
 .env
+
+indictrans2-en-indic-int8/
+indictrans2-indic-en-200m/
+indictrans2-indic-indic-320M/
+indictrans2-indic-indic-int8/
+nllb-600m-int8/
