@@ -16,9 +16,26 @@ from tokenization_indictrans import IndicTransTokenizer
 from tokenizers import Tokenizer
 
 
-MODEL_PATH = r".\indictrans2-en-indic-int8"
-INDIC_MODEL_PATH = r".\indictrans2-indic-indic-int8"
-INDIC_EN_MODEL_PATH = r".\indictrans2-indic-en-200m"
+import os
+from huggingface_hub import snapshot_download
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+def get_model_path(folder):
+    local_path = os.path.join(BASE_DIR, folder)
+
+    if os.path.exists(local_path):
+        return local_path
+
+    downloaded_path = snapshot_download(
+        repo_id="aadarshc967/vernacai-models",
+        allow_patterns=[folder + "/*"]
+    )
+
+    return os.path.join(downloaded_path, folder)
+MODEL_PATH = get_model_path("indictrans2-en-indic-int8")
+INDIC_MODEL_PATH = get_model_path("indictrans2-indic-indic-int8")
+INDIC_EN_MODEL_PATH = get_model_path("indictrans2-indic-en-200m")
 
 
 tokenizer = IndicTransTokenizer(
